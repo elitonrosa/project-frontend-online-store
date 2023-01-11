@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Loading from '../components/Loading';
 import { getCategories } from '../services/api';
 
-class Categories extends Component {
+class Home extends Component {
   state = {
     isLoading: false,
     categories: [],
@@ -23,7 +23,7 @@ class Categories extends Component {
         categories,
       });
       console.log(categories);
-    });
+    }); // teste
   };
 
   render() {
@@ -56,4 +56,4 @@ class Categories extends Component {
     );
   }
 }
-export default Categories;
+export default Home;
