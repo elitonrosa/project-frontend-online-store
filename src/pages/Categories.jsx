@@ -31,13 +31,13 @@ class Categories extends Component {
     return (
       <div>
         <Header />
+        <h1
+          data-testid="home-initial-message"
+        >
+          Digite algum termo de pesquisa ou escolha uma categoria.
+        </h1>
         {isLoading ? <Loading /> : (
           <div>
-            <h1
-              data-testid="home-initial-message"
-            >
-              Digite algum termo de pesquisa ou escolha uma categoria.
-            </h1>
             { categories.map((categorie) => (
               <li
                 key={ categorie.id }
