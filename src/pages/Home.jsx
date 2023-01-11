@@ -23,7 +23,7 @@ class Home extends Component {
         categories,
       });
       console.log(categories);
-    });
+    }); // teste
   };
 
   render() {
