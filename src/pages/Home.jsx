@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
-import { getCategories } from '../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 class Home extends Component {
   state = {
     isLoading: false,
     categories: [],
+    products: [],
+    search: '',
   };
 
   componentDidMount() {
@@ -22,8 +24,29 @@ class Home extends Component {
         isLoading: false,
         categories,
       });
-      console.log(categories);
+      // console.log(categories);
     }); // teste
+  };
+
+  handleChange = ({ target }) => {
+    const { value } = target;
+    this.setState({
+      search: value,
+    });
+    console.log(search);
+  };
+
+  onClickButton = () => {
+    this.setState({
+      isLoading: true,
+    }, async () => {
+      const response = await getProductsFromCategoryAndQuery(value);
+      console.log(response);
+      this.setState({
+        isLoading: false,
+        products: response,
+      });
+    });
   };
 
   render() {
@@ -31,11 +54,24 @@ class Home extends Component {
     return (
       <div>
         <Header />
-        <h1
+        <label
           data-testid="home-initial-message"
+          htmlFor="search-label"
         >
+          <input
+            type="text"
+            id="search-label"
+            data-testid="query-input"
+          />
           Digite algum termo de pesquisa ou escolha uma categoria.
-        </h1>
+        </label>
+        <button
+          type="submit"
+          data-testid="query-button"
+          onClick={ this.onClickButton }
+        >
+          Pesquisar
+        </button>
         {isLoading ? <Loading /> : (
           <div>
             { categories.map((categorie) => (
