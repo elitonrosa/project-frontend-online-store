@@ -8,7 +8,6 @@ class ShoppingCart extends Component {
           data-testid="shopping-cart-empty-message"
         >
           Seu carrinho está vazio
-
         </p>
       </div>
     );
