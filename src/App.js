@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
-import { getCategories } from './services/api';
+import { Route, Switch } from 'react-router-dom';
+import Categories from './pages/Categories';
 
 function App() {
   return (
     <div>
-      <h1>
-        TESTE
-      </h1>
-      { console.log(getCategories()) }
+      <Switch>
+        <Route exact path="/" component={ Categories } />
+      </Switch>
     </div>
   );
 }
