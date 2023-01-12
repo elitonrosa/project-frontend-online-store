@@ -20,16 +20,15 @@ class ProductDetails extends Component {
     const { id } = this.state;
     const response = await getProductById(id);
     this.setState({
-      infoProduct: response.results,
+      infoProduct: response,
     });
   };
 
   render() {
     const { infoProduct } = this.state;
-
     return (
       <div
-        data-testid="product-detail-link"
+        data-testid="product"
       >
         <p>TESTE</p>
         <p
@@ -50,11 +49,11 @@ class ProductDetails extends Component {
           src={ infoProduct.thumbnail }
           alt={ infoProduct.title }
         />
-        <Header />
+        <Header data-testid="shopping-cart-button" />
         {/* <button
           type="submit"
           data-testid="shopping-cart-button"
-        /> */}
+        > */}
       </div>
     );
   }

@@ -29,7 +29,7 @@ class Home extends Component {
         isLoading: false,
         categories, // setando o estado com o resultado da API que mostra as categorias
       });
-      console.log(categories);
+      // console.log(categories);
     });
   };
 
@@ -48,7 +48,7 @@ class Home extends Component {
       isLoading: true,
     }, async () => {
       const response = await getProductsFromCategoryAndQuery(undefined, search);
-      console.log(response);
+      // console.log(response);
       if (response.results.length < 1) {
         console.log('teste');
         this.setState({
@@ -111,6 +111,7 @@ class Home extends Component {
               <Link
                 to={ `/detalhesProduto/${product.id}` }
                 key={ product.id }
+                data-testid="product-detail-link"
               >
                 <ProductsCard
                   key={ product.id }
