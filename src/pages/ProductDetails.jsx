@@ -1,10 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import { getProductById } from '../services/api';
 
 class ProductDetails extends Component {
+  state = {
+    infoProduct: [],
+    id: '',
+  };
+
+  componentDidMount() {
+    const { match: { params: { id } } } = this.props;
+    this.setState({
+      id,
+    }, this.getInfoProduct);
+  }
+
+  getInfoProduct = async () => {
+    const { id } = this.state;
+    const response = await getProductById(id);
+    this.setState({
+      infoProduct: response.results,
+    });
+  };
+
   render() {
-    const { price, title, thumbnail, condition } = this.props;
+    const { infoProduct } = this.state;
+
     return (
       <div
         data-testid="product-detail-link"
@@ -13,20 +35,20 @@ class ProductDetails extends Component {
         <p
           data-testid="product-detail-name"
         >
-          {title}
+          {infoProduct.title}
         </p>
         <p
           data-testid="product-detail-price"
         >
-          {price}
+          { infoProduct.price }
         </p>
         <p>
-          { condition }
+          { infoProduct.condition }
         </p>
         <img
           data-testid="product-detail-image"
-          src={ thumbnail }
-          alt={ title }
+          src={ infoProduct.thumbnail }
+          alt={ infoProduct.title }
         />
         <Header />
         {/* <button
@@ -40,8 +62,5 @@ class ProductDetails extends Component {
 export default ProductDetails;
 
 ProductDetails.propTypes = {
-  price: PropTypes.string,
-  title: PropTypes.string,
-  thumbnail: PropTypes.string,
-  condition: PropTypes.string,
+  match: PropTypes.string,
 }.isRequired;

@@ -112,7 +112,6 @@ class Home extends Component {
                 to={ `/detalhesProduto/${product.id}` }
                 key={ product.id }
               >
-                <ProductDetails />
                 <ProductsCard
                   key={ product.id }
                   title={ product.title }
