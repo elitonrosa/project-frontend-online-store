@@ -18,20 +18,20 @@ class Home extends Component {
     this.categoriesList();
   }
 
-  categoriesList = () => {
+  categoriesList = () => { // func criada para pegar a lista de todas as categorias
     this.setState({
       isLoading: true,
     }, async () => {
       const categories = await getCategories();
       this.setState({
         isLoading: false,
-        categories,
+        categories, // setando o estado com o resultado da API que mostra as categorias
       });
-      // console.log(categories);
-    }); // teste
+      console.log(categories);
+    });
   };
 
-  handleChange = ({ target }) => {
+  handleChange = ({ target }) => { // func criada pra pegar o valor digitado no campo de busca
     const { value } = target;
     // console.log(value);
     this.setState({
@@ -40,13 +40,28 @@ class Home extends Component {
     // console.log(search);
   };
 
-  onClickButton = () => {
+  onClickButton = () => { // func criada pra fazer uma requisição na API de acordo com a palavra digitada no campo de busca - essa função é acionada qdo clica no botão de pesquisa
     const { search } = this.state;
     this.setState({
       isLoading: true,
     }, async () => {
       const response = await getProductsFromCategoryAndQuery(undefined, search);
       console.log(response.results);
+      this.setState({
+        isLoading: false,
+        products: response.results,
+      });
+    });
+  };
+
+  resultOfCategory = ({ target }) => { // func criada pra listar os produtos de uma determinada categoria escolhida na Home
+    const { id } = target;
+    // console.log(target); // mostra todos os atributos do elemento que eu clico, <button>
+    this.setState({
+      isLoading: true,
+    }, async () => {
+      const response = await getProductsFromCategoryAndQuery(id, undefined);
+      // console.log(response.results);
       this.setState({
         isLoading: false,
         products: response.results,
@@ -67,7 +82,7 @@ class Home extends Component {
           <div>
             {products.map((product) => (
               <ProductsCard
-                key={ product.title }
+                key={ product.id }
                 title={ product.title }
                 price={ product.price }
                 thumbnail={ product.thumbnail }
@@ -84,6 +99,8 @@ class Home extends Component {
                 <button
                   data-testid="category"
                   type="button"
+                  onClick={ this.resultOfCategory }
+                  id={ categorie.id } // atributo criado pra pegar o ID da categoria
                 >
                   {categorie.name}
                 </button>
