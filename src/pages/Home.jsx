@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import AnyProduct from '../components/AnyProduct';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import ProductsCard from '../components/ProductsCard';
 import Search from '../components/Search';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import ProductDetails from './ProductDetails';
 
 class Home extends Component {
   state = {
@@ -106,12 +108,18 @@ class Home extends Component {
         {!products ? <AnyProduct /> : (
           <div>
             {products.map((product) => (
-              <ProductsCard
+              <Link
+                to={ `/detalhesProduto/${product.id}` }
                 key={ product.id }
-                title={ product.title }
-                price={ product.price }
-                thumbnail={ product.thumbnail }
-              />
+              >
+                <ProductDetails />
+                <ProductsCard
+                  key={ product.id }
+                  title={ product.title }
+                  price={ product.price }
+                  thumbnail={ product.thumbnail }
+                />
+              </Link>
             ))}
           </div>
         )}
