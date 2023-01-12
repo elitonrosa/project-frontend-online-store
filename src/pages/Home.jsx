@@ -46,11 +46,19 @@ class Home extends Component {
       isLoading: true,
     }, async () => {
       const response = await getProductsFromCategoryAndQuery(undefined, search);
-      console.log(response.results);
-      this.setState({
-        isLoading: false,
-        products: response.results,
-      });
+      console.log(response);
+      if (response.results.length < 1) {
+        console.log('teste');
+        this.setState({
+          isLoading: false,
+          products: false,
+        });
+      } else {
+        this.setState({
+          isLoading: false,
+          products: response.results,
+        });
+      }
     });
   };
 
@@ -78,18 +86,6 @@ class Home extends Component {
           handleChange={ this.handleChange }
           onClickButton={ this.onClickButton }
         />
-        {products.length === 0 ? <AnyProduct /> : (
-          <div>
-            {products.map((product) => (
-              <ProductsCard
-                key={ product.id }
-                title={ product.title }
-                price={ product.price }
-                thumbnail={ product.thumbnail }
-              />
-            ))}
-          </div>
-        )}
         {isLoading ? <Loading /> : (
           <div>
             {categories.map((categorie) => (
@@ -100,11 +96,23 @@ class Home extends Component {
                   data-testid="category"
                   type="button"
                   onClick={ this.resultOfCategory }
-                  id={ categorie.id } // atributo criado pra pegar o ID da categoria
+                  id={ categorie.id }
                 >
                   {categorie.name}
                 </button>
               </li>))}
+          </div>
+        )}
+        {!products ? <AnyProduct /> : (
+          <div>
+            {products.map((product) => (
+              <ProductsCard
+                key={ product.id }
+                title={ product.title }
+                price={ product.price }
+                thumbnail={ product.thumbnail }
+              />
+            ))}
           </div>
         )}
       </div>
