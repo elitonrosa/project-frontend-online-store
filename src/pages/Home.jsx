@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import AnyProduct from '../components/AnyProduct';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
+import ProductsCard from '../components/ProductsCard';
+import Search from '../components/Search';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 class Home extends Component {
@@ -30,54 +33,51 @@ class Home extends Component {
 
   handleChange = ({ target }) => {
     const { value } = target;
+    // console.log(value);
     this.setState({
       search: value,
     });
-    const { search } = this.state;
-    console.log(search);
+    // console.log(search);
   };
 
   onClickButton = () => {
+    const { search } = this.state;
     this.setState({
       isLoading: true,
     }, async () => {
-      const { search } = this.state;
-      const response = await getProductsFromCategoryAndQuery('', search);
-      console.log(response);
+      const response = await getProductsFromCategoryAndQuery(undefined, search);
+      console.log(response.results);
       this.setState({
         isLoading: false,
-        products: response,
+        products: response.results,
       });
     });
   };
 
   render() {
-    const { isLoading, categories } = this.state;
+    const { isLoading, categories, products } = this.state;
     return (
       <div>
         <Header />
-        <label
-          data-testid="home-initial-message"
-          htmlFor="search-label"
-        >
-          <input
-            type="text"
-            id="search-label"
-            data-testid="query-input"
-            onChange={ this.handleChange }
-          />
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </label>
-        <button
-          type="submit"
-          data-testid="query-button"
-          onClick={ this.onClickButton }
-        >
-          Pesquisar
-        </button>
+        <Search
+          handleChange={ this.handleChange }
+          onClickButton={ this.onClickButton }
+        />
+        {products.length === 0 ? <AnyProduct /> : (
+          <div>
+            {products.map((product) => (
+              <ProductsCard
+                key={ product.title }
+                title={ product.title }
+                price={ product.price }
+                thumbnail={ product.thumbnail }
+              />
+            ))}
+          </div>
+        )}
         {isLoading ? <Loading /> : (
           <div>
-            { categories.map((categorie) => (
+            {categories.map((categorie) => (
               <li
                 key={ categorie.id }
               >
@@ -91,7 +91,6 @@ class Home extends Component {
           </div>
         )}
       </div>
-
     );
   }
 }
