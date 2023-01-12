@@ -33,6 +33,7 @@ class Home extends Component {
     this.setState({
       search: value,
     });
+    const { search } = this.state;
     console.log(search);
   };
 
@@ -40,7 +41,8 @@ class Home extends Component {
     this.setState({
       isLoading: true,
     }, async () => {
-      const response = await getProductsFromCategoryAndQuery(value);
+      const { search } = this.state;
+      const response = await getProductsFromCategoryAndQuery('', search);
       console.log(response);
       this.setState({
         isLoading: false,
@@ -62,6 +64,7 @@ class Home extends Component {
             type="text"
             id="search-label"
             data-testid="query-input"
+            onChange={ this.handleChange }
           />
           Digite algum termo de pesquisa ou escolha uma categoria.
         </label>
