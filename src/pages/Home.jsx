@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 import ProductsCard from '../components/ProductsCard';
 import Search from '../components/Search';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
-import ProductDetails from './ProductDetails';
+// import ProductDetails from './ProductDetails';
 
 class Home extends Component {
   state = {
