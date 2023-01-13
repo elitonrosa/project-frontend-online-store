@@ -14,6 +14,7 @@ class Home extends Component {
     categories: [],
     products: [],
     search: '',
+    selectedProducts: [],
   };
 
   componentDidMount() {
@@ -79,6 +80,16 @@ class Home extends Component {
     });
   };
 
+  // REQUISITO 8
+  addProductShoppingCart = ({ target }) => { // FUNC criada para add o produto clicado ao carrinho e salvar no LS
+    // essa fun precisa pegar o produto clicado e enviar para o component Shopping Cart
+    const { id } = target; // pega o ID do produto clicado
+    this.setState({
+      selectedProducts: id,
+    });
+    console.log(selectedProducts);
+  };
+
   render() {
     const { isLoading, categories, products } = this.state;
     return (
@@ -113,6 +124,14 @@ class Home extends Component {
                 key={ product.id }
                 data-testid="product-detail-link"
               >
+                <button
+                  type="button"
+                  data-testid="product-add-to-cart"
+                  onClick={ this.addProductShoppingCart }
+                >
+                  Eu quero
+
+                </button>
                 <ProductsCard
                   key={ product.id }
                   title={ product.title }
