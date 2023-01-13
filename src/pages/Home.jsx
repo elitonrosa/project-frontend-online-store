@@ -83,7 +83,6 @@ class Home extends Component {
   // REQUISITO 8
   addProductShoppingCart = ({ target }) => { // FUNC criada para add o produto clicado ao carrinho (shoppingCart) e salvar no LS
     const { id } = target; // pega o ID do produto clicado
-    const { selectedProducts } = this.state;
     // const products = [];
     // products.push(id);
     // console.log(products);
@@ -92,6 +91,7 @@ class Home extends Component {
     this.setState((prevState) => ({
       selectedProducts: [...prevState.selectedProducts, ...[id]],
     }), () => {
+      const { selectedProducts } = this.state;
       localStorage
         .setItem('ID_PRODUTO', JSON.stringify(selectedProducts));
     });
