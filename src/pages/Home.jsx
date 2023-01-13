@@ -82,7 +82,6 @@ class Home extends Component {
 
   // REQUISITO 8
   addProductShoppingCart = (product) => {
-    const { id, title, thumbnail, price } = product;
     // FUNC criada para add o produto clicado ao carrinho (shoppingCart) e salvar no LS
     // const { id, title, price, thumbnail } = product; // pega o ID do produto clicado
     // const products = [];

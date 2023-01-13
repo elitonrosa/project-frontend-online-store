@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import ProductsCard from '../components/ProductsCard';
+import ProductsCard from '../components/ProductsCard';
 
 class ShoppingCart extends Component {
   state = {
@@ -13,7 +13,6 @@ class ShoppingCart extends Component {
   getFromLS = () => {
     const items = localStorage.getItem('ID_PRODUTO');
     const itemsArray = JSON.parse(items);
-    console.log(itemsArray);
     this.setState({
       itemsLS: itemsArray,
     });
@@ -21,12 +20,18 @@ class ShoppingCart extends Component {
 
   render() {
     const { itemsLS } = this.state;
-    // const { id, price, title, thumbnail } = itemsLS;
     return (
       <div>
-        <p data-testid="shopping-cart-empty-message">
-          Seu carrinho está vazio
-        </p>
+        {!itemsLS
+          ? <p>Opa</p>
+          : (itemsLS.map((product, index) => (
+            <ProductsCard
+              key={ index }
+              title={ product.title }
+              price={ product.price }
+              thumbnail={ product.thumbnail }
+            />
+          )))}
       </div>
     );
   }
