@@ -25,9 +25,10 @@ class ShoppingCart extends Component {
         {!itemsLS
           ? <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
           : (itemsLS.map((product, index) => (
-            <>
+            <div
+              key={ `${index}${product.id}` }
+            >
               <ProductsCard
-                key={ index }
                 title={ product.title }
                 price={ product.price }
                 thumbnail={ product.thumbnail }
@@ -37,7 +38,7 @@ class ShoppingCart extends Component {
               >
                 Quantidade: 1
               </p>
-            </>
+            </div>
           )))}
       </div>
     );

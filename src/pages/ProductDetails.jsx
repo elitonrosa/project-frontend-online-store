@@ -7,13 +7,25 @@ class ProductDetails extends Component {
   state = {
     infoProduct: [],
     id: '',
+    productsLocalStorage: [],
   };
 
+  // Ler o Local Storage com o getItem, depois setar no productsLocalStorage
   componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    this.setState({
-      id,
-    }, this.getInfoProduct);
+    const items = localStorage.getItem('ID_PRODUTO');
+    const itemsArray = JSON.parse(items);
+    if (!itemsArray) {
+      this.setState({
+        productsLocalStorage: [],
+        id,
+      }, this.getInfoProduct);
+    } else {
+      this.setState({
+        productsLocalStorage: itemsArray,
+        id,
+      }, this.getInfoProduct);
+    }
   }
 
   getInfoProduct = async () => {
@@ -21,6 +33,20 @@ class ProductDetails extends Component {
     const response = await getProductById(id);
     this.setState({
       infoProduct: response,
+    });
+  };
+
+  // Requisito 9
+  addProductToCart = (product) => {
+    // Adicionar chave quantidade no product
+    // Verificar se o produto já existe no Local Storage, se existir aumentar a quantity (quantity + 1), se não existir (quantity: 1)
+
+    this.setState((prevState) => ({
+      productsLocalStorage: [...prevState.productsLocalStorage, product],
+    }), () => {
+      const { productsLocalStorage } = this.state;
+      localStorage
+        .setItem('ID_PRODUTO', JSON.stringify(productsLocalStorage));
     });
   };
 
@@ -49,6 +75,14 @@ class ProductDetails extends Component {
           src={ infoProduct.thumbnail }
           alt={ infoProduct.title }
         />
+        <button
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={ () => this.addProductToCart(infoProduct) }
+          id={ infoProduct.id }
+        >
+          Eu quero
+        </button>
         <Header data-testid="shopping-cart-button" />
         {/* <button
           type="submit"
