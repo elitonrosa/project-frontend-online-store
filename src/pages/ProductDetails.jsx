@@ -36,7 +36,7 @@ class ProductDetails extends Component {
     });
   };
 
-  // Requisito 9
+  // Requisito 09
   addProductToCart = (product) => {
     // Adicionar chave quantidade no product
     // Verificar se o produto já existe no Local Storage, se existir aumentar a quantity (quantity + 1), se não existir (quantity: 1)
