@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 import ProductsCard from '../components/ProductsCard';
 import Search from '../components/Search';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
-import addProductsLocalStorage from '../services/addLocalStorage';
+// import addProductsLocalStorage from '../services/addLocalStorage';
 
 class Home extends Component {
   state = {
@@ -81,15 +81,17 @@ class Home extends Component {
   };
 
   // REQUISITO 8
-  addProductShoppingCart = ({ target }) => { // FUNC criada para add o produto clicado ao carrinho (shoppingCart) e salvar no LS
-    const { id } = target; // pega o ID do produto clicado
+  addProductShoppingCart = (product) => {
+    const { id, title, thumbnail, price } = product;
+    // FUNC criada para add o produto clicado ao carrinho (shoppingCart) e salvar no LS
+    // const { id, title, price, thumbnail } = product; // pega o ID do produto clicado
     // const products = [];
     // products.push(id);
     // console.log(products);
     // localStorage
     //   .setItem('ID_PRODUTO', JSON.stringify(products));
     this.setState((prevState) => ({
-      selectedProducts: [...prevState.selectedProducts, ...[id]],
+      selectedProducts: [...prevState.selectedProducts, ...[product]],
     }), () => {
       const { selectedProducts } = this.state;
       localStorage
@@ -144,7 +146,7 @@ class Home extends Component {
                 <button
                   type="button"
                   data-testid="product-add-to-cart"
-                  onClick={ this.addProductShoppingCart }
+                  onClick={ () => this.addProductShoppingCart(product) }
                   id={ product.id }
                 >
                   Eu quero
