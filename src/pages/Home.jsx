@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 import ProductsCard from '../components/ProductsCard';
 import Search from '../components/Search';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
-// import ProductDetails from './ProductDetails';
+// import addProductsLocalStorage from '../services/addLocalStorage';
 
 class Home extends Component {
   state = {
@@ -14,6 +14,7 @@ class Home extends Component {
     categories: [],
     products: [],
     search: '',
+    selectedProducts: [],
   };
 
   componentDidMount() {
@@ -79,6 +80,24 @@ class Home extends Component {
     });
   };
 
+  // REQUISITO 8
+  addProductShoppingCart = (product) => {
+    // FUNC criada para add o produto clicado ao carrinho (shoppingCart) e salvar no LS
+    // const { id, title, price, thumbnail } = product; // pega o ID do produto clicado
+    // const products = [];
+    // products.push(id);
+    // console.log(products);
+    // localStorage
+    //   .setItem('ID_PRODUTO', JSON.stringify(products));
+    this.setState((prevState) => ({
+      selectedProducts: [...prevState.selectedProducts, ...[product]],
+    }), () => {
+      const { selectedProducts } = this.state;
+      localStorage
+        .setItem('ID_PRODUTO', JSON.stringify(selectedProducts));
+    });
+  };
+
   render() {
     const { isLoading, categories, products } = this.state;
     return (
@@ -108,18 +127,30 @@ class Home extends Component {
         {!products ? <AnyProduct /> : (
           <div>
             {products.map((product) => (
-              <Link
-                to={ `/detalhesProduto/${product.id}` }
+              <div
                 key={ product.id }
-                data-testid="product-detail-link"
               >
-                <ProductsCard
+                <Link
+                  to={ `/detalhesProduto/${product.id}` }
                   key={ product.id }
-                  title={ product.title }
-                  price={ product.price }
-                  thumbnail={ product.thumbnail }
-                />
-              </Link>
+                  data-testid="product-detail-link"
+                >
+                  <ProductsCard
+                    key={ product.id }
+                    title={ product.title }
+                    price={ product.price }
+                    thumbnail={ product.thumbnail }
+                  />
+                </Link>
+                <button
+                  type="button"
+                  data-testid="product-add-to-cart"
+                  onClick={ () => this.addProductShoppingCart(product) }
+                  id={ product.id }
+                >
+                  Eu quero
+                </button>
+              </div>
             ))}
           </div>
         )}

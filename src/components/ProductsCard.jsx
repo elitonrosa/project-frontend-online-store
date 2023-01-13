@@ -8,7 +8,9 @@ class ProductsCard extends Component {
       <div
         data-testid="product"
       >
-        <p>
+        <p
+          data-testid="shopping-cart-product-name"
+        >
           {title}
         </p>
         <p>

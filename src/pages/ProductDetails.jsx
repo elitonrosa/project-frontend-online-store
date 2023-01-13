@@ -30,7 +30,7 @@ class ProductDetails extends Component {
       <div
         data-testid="product"
       >
-        <p>TESTE</p>
+        <h1>Detalhes do produto</h1>
         <p
           data-testid="product-detail-name"
         >
