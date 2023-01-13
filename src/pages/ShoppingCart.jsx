@@ -23,14 +23,21 @@ class ShoppingCart extends Component {
     return (
       <div>
         {!itemsLS
-          ? <p>Opa</p>
+          ? <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
           : (itemsLS.map((product, index) => (
-            <ProductsCard
-              key={ index }
-              title={ product.title }
-              price={ product.price }
-              thumbnail={ product.thumbnail }
-            />
+            <>
+              <ProductsCard
+                key={ index }
+                title={ product.title }
+                price={ product.price }
+                thumbnail={ product.thumbnail }
+              />
+              <p
+                data-testid="shopping-cart-product-quantity"
+              >
+                Quantidade: 1
+              </p>
+            </>
           )))}
       </div>
     );
