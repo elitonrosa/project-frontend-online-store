@@ -14,14 +14,23 @@ class ShoppingCart extends Component {
     const items = localStorage.getItem('ID_PRODUTO');
     const itemsArray = JSON.parse(items);
     this.setState({
-      itemsLS: itemsArray,
+      itemsLS: itemsArray, // items que estão no LS
     });
   };
 
   // Requisito 10
-  removeFromLocalStorage = () => {
-    
-  }
+
+  filterSpecificProduct = (idShoppingCart) => { // qdo clicamos em EXCLUIR, chama essa func
+    // retorna todos os produtos menos o que foi clicado
+    const { itemsLS } = this.state; // pega os itens do LS
+    const result = itemsLS.filter((item) => (item.id !== idShoppingCart)); // se o id do item do ARRAY for diferente do parametro, retorna TRUE
+    this.setState({
+      itemsLS: result, // seta o estado com o ítem ja excluído
+    }, () => {
+      localStorage
+        .setItem('ID_PRODUTO', JSON.stringify(itemsLS)); // salva no LS
+    });
+  };
 
   render() {
     const { itemsLS } = this.state;
@@ -46,7 +55,7 @@ class ShoppingCart extends Component {
               <button
                 type="button"
                 data-testid="remove-product"
-                onClick={ () => removeFromLocalStorage() }
+                onClick={ () => this.filterSpecificProduct(product.id) }
               >
                 Excluir
               </button>

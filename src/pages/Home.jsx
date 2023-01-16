@@ -81,14 +81,14 @@ class Home extends Component {
   };
 
   // REQUISITO 8
-  addProductShoppingCart = (product) => {
+  addProductShoppingCart = (product) => { // product é o produto inteiro (nome, imagem, valor)
     // FUNC criada para add o produto clicado ao carrinho (shoppingCart) e salvar no LS
     this.setState((prevState) => ({
-      selectedProducts: [...prevState.selectedProducts, ...[{ ...product, quantity: 1 }]],
+      selectedProducts: [...prevState.selectedProducts, ...[{ ...product, quantity: 1 }]], // pega o valor anterior (prevState), os produtos adicionados, add o novo e criando a chave quantity
     }), () => {
       const { selectedProducts } = this.state;
       localStorage
-        .setItem('ID_PRODUTO', JSON.stringify(selectedProducts));
+        .setItem('ID_PRODUTO', JSON.stringify(selectedProducts)); // salva no local storage a lista de produtos que foi add no carrinho
     });
   };
 
