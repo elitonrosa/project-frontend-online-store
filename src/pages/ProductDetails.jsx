@@ -1,7 +1,8 @@
-mport React, { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { getProductById } from '../services/api';
+
 class ProductDetails extends Component {
   state = {
     infoProduct: [],
@@ -12,6 +13,7 @@ class ProductDetails extends Component {
     rate: '',
     message: false,
   };
+
   // Ler o Local Storage com o getItem, depois setar no productsLocalStorage
   componentDidMount() {
     const { match: { params: { id } } } = this.props;
@@ -29,6 +31,7 @@ class ProductDetails extends Component {
       }, this.getInfoProduct);
     }
   }
+
   getInfoProduct = async () => {
     const { id } = this.state;
     const response = await getProductById(id);
@@ -36,6 +39,7 @@ class ProductDetails extends Component {
       infoProduct: response,
     });
   };
+
   // Requisito 09
   addProductToCart = (product) => {
     // Adicionar chave quantidade no product
@@ -48,12 +52,14 @@ class ProductDetails extends Component {
         .setItem('ID_PRODUTO', JSON.stringify(productsLocalStorage));
     });
   };
+
   // Requisito 11
   handleChange = ({ target: { value, name } }) => {
     this.setState({
       [name]: value,
     });
   };
+
   onClickButton = () => {
     const { emailUser, description, rate } = this.state;
     if (!emailUser && !description && !rate) {
@@ -66,6 +72,7 @@ class ProductDetails extends Component {
       });
     }
   };
+
   render() {
     const { infoProduct, message } = this.state;
     return (
