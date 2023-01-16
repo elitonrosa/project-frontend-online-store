@@ -36,13 +36,11 @@ class ProductDetails extends Component {
     });
   };
 
-  // Requisito 09
+  // Requisito 9
   addProductToCart = (product) => {
-    // Adicionar chave quantidade no product
-    // Verificar se o produto já existe no Local Storage, se existir aumentar a quantity (quantity + 1), se não existir (quantity: 1)
-
     this.setState((prevState) => ({
-      productsLocalStorage: [...prevState.productsLocalStorage, product],
+      productsLocalStorage:
+      [...prevState.productsLocalStorage, { ...product, quantity: 1 }],
     }), () => {
       const { productsLocalStorage } = this.state;
       localStorage
@@ -84,10 +82,6 @@ class ProductDetails extends Component {
           Eu quero
         </button>
         <Header data-testid="shopping-cart-button" />
-        {/* <button
-          type="submit"
-          data-testid="shopping-cart-button"
-        > */}
       </div>
     );
   }

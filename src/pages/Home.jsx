@@ -19,7 +19,23 @@ class Home extends Component {
 
   componentDidMount() {
     this.categoriesList();
+    this.getFromLS();
   }
+
+  getFromLS = () => {
+    const items = localStorage.getItem('ID_PRODUTO');
+    const itemsArray = JSON.parse(items);
+    if (!itemsArray) {
+      this.setState({
+        selectedProducts: [],
+      });
+    } else {
+      this.setState({
+        selectedProducts: itemsArray, // items que estão no LS
+      });
+      console.log(itemsArray);
+    }
+  };
 
   categoriesList = () => { // func criada para pegar a lista de todas as categorias
     this.setState({
@@ -81,15 +97,32 @@ class Home extends Component {
   };
 
   // REQUISITO 8
-  addProductShoppingCart = (product) => {
+  addProductShoppingCart = (product) => { // product é o produto inteiro (nome, imagem, valor)
     // FUNC criada para add o produto clicado ao carrinho (shoppingCart) e salvar no LS
-    this.setState((prevState) => ({
-      selectedProducts: [...prevState.selectedProducts, ...[product]],
-    }), () => {
-      const { selectedProducts } = this.state;
+    const items = localStorage.getItem('ID_PRODUTO');
+    const itemsArray = JSON.parse(items) || [];
+    if (itemsArray.some((item) => item.id === product.id)) { // se o product (clicado) existe no array retornado do LS, quantity + 1. Se nao existir, adiciona o número 1 (linha 108)
+      const newItemsArry = itemsArray.map((item) => { // o map vai de produto em produto e altera retornando um novo array
+        if (item.id === product.id) {
+          item.quantity += 1;
+        }
+        return item;
+      });
       localStorage
-        .setItem('ID_PRODUTO', JSON.stringify(selectedProducts));
-    });
+        .setItem('ID_PRODUTO', JSON.stringify(newItemsArry));
+      this.setState({
+        selectedProducts: newItemsArry,
+      });
+    } else {
+      this.setState((prevState) => ({
+        selectedProducts:
+        [...prevState.selectedProducts, ...[{ ...product, quantity: 1 }]], // pega o valor anterior (prevState), os produtos adicionados, add o novo e criando a chave quantity
+      }), () => {
+        const { selectedProducts } = this.state;
+        localStorage
+          .setItem('ID_PRODUTO', JSON.stringify(selectedProducts)); // salva no local storage a lista de produtos que foi add no carrinho
+      });
+    }
   };
 
   render() {
