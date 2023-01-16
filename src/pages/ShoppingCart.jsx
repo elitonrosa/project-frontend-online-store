@@ -57,10 +57,7 @@ class ShoppingCart extends Component {
     const itemsArray = JSON.parse(items) || [];
     const newItems = itemsArray.map((item) => { // o map vai de produto em produto e altera retornando um novo array
       if (item.id === productCart.id && item.quantity > 1) {
-        // if (item.quantity > 0) {
-          item.quantity -= 1;
-        // }
-        // return;
+        item.quantity -= 1;
       }
       return item;
     });
