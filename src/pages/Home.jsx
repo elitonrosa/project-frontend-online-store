@@ -25,10 +25,16 @@ class Home extends Component {
   getFromLS = () => {
     const items = localStorage.getItem('ID_PRODUTO');
     const itemsArray = JSON.parse(items);
-    console.log(itemsArray);
-    this.setState({
-      selectedProducts: itemsArray, // items que estão no LS
-    });
+    if (!itemsArray) {
+      this.setState({
+        selectedProducts: [],
+      });
+    } else {
+      this.setState({
+        selectedProducts: itemsArray, // items que estão no LS
+      });
+      console.log(itemsArray);
+    }
   };
 
   categoriesList = () => { // func criada para pegar a lista de todas as categorias

@@ -59,7 +59,7 @@ class ShoppingCart extends Component {
               <p
                 data-testid="shopping-cart-product-quantity"
               >
-                quantidade: 1
+                { product.quantity }
               </p>
               <button
                 type="button"

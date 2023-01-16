@@ -39,7 +39,8 @@ class ProductDetails extends Component {
   // Requisito 9
   addProductToCart = (product) => {
     this.setState((prevState) => ({
-      productsLocalStorage: [...prevState.productsLocalStorage, product],
+      productsLocalStorage:
+      [...prevState.productsLocalStorage, { ...product, quantity: 1 }],
     }), () => {
       const { productsLocalStorage } = this.state;
       localStorage
