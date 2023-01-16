@@ -19,7 +19,17 @@ class Home extends Component {
 
   componentDidMount() {
     this.categoriesList();
+    this.getFromLS();
   }
+
+  getFromLS = () => {
+    const items = localStorage.getItem('ID_PRODUTO');
+    const itemsArray = JSON.parse(items);
+    console.log(itemsArray);
+    this.setState({
+      selectedProducts: itemsArray, // items que estão no LS
+    });
+  };
 
   categoriesList = () => { // func criada para pegar a lista de todas as categorias
     this.setState({

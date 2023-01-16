@@ -27,8 +27,10 @@ class ShoppingCart extends Component {
     this.setState({
       itemsLS: result, // seta o estado com o ítem ja excluído
     }, () => {
+      const { itemsLS: newItems } = this.state;
+      // renomeia a variável (nao o estado)
       localStorage
-        .setItem('ID_PRODUTO', JSON.stringify(itemsLS)); // salva no LS
+        .setItem('ID_PRODUTO', JSON.stringify(newItems)); // salva no LS
     });
   };
 
@@ -47,11 +49,25 @@ class ShoppingCart extends Component {
                 price={ product.price }
                 thumbnail={ product.thumbnail }
               />
+              <button
+                type="button"
+                data-testid="product-increase-quantity"
+                onClick={ () => console.log('somar') }
+              >
+                +
+              </button>
               <p
                 data-testid="shopping-cart-product-quantity"
               >
-                Quantidade: 1
+                quantidade: 1
               </p>
+              <button
+                type="button"
+                data-testid="product-decrease-quantity"
+                onClick={ () => console.log('subtrair') }
+              >
+                -
+              </button>
               <button
                 type="button"
                 data-testid="remove-product"
