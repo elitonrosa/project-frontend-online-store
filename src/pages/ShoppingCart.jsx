@@ -18,6 +18,11 @@ class ShoppingCart extends Component {
     });
   };
 
+  // Requisito 10
+  removeFromLocalStorage = () => {
+    
+  }
+
   render() {
     const { itemsLS } = this.state;
     return (
@@ -38,6 +43,13 @@ class ShoppingCart extends Component {
               >
                 Quantidade: 1
               </p>
+              <button
+                type="button"
+                data-testid="remove-product"
+                onClick={ () => removeFromLocalStorage() }
+              >
+                Excluir
+              </button>
             </div>
           )))}
       </div>

@@ -84,7 +84,7 @@ class Home extends Component {
   addProductShoppingCart = (product) => {
     // FUNC criada para add o produto clicado ao carrinho (shoppingCart) e salvar no LS
     this.setState((prevState) => ({
-      selectedProducts: [...prevState.selectedProducts, ...[product]],
+      selectedProducts: [...prevState.selectedProducts, ...[{ ...product, quantity: 1 }]],
     }), () => {
       const { selectedProducts } = this.state;
       localStorage
