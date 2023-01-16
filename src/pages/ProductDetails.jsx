@@ -82,10 +82,6 @@ class ProductDetails extends Component {
           Eu quero
         </button>
         <Header data-testid="shopping-cart-button" />
-        {/* <button
-          type="submit"
-          data-testid="shopping-cart-button"
-        > */}
       </div>
     );
   }

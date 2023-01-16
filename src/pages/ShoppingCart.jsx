@@ -34,6 +34,40 @@ class ShoppingCart extends Component {
     });
   };
 
+  // REQUISITO 10 - SOMAR OS ITENS
+
+  increase = (productCart) => {
+    const items = localStorage.getItem('ID_PRODUTO');
+    const itemsArray = JSON.parse(items) || [];
+    const newItemsArry = itemsArray.map((item) => { // o map vai de produto em produto e altera retornando um novo array
+      if (item.id === productCart.id) {
+        item.quantity += 1;
+      }
+      return item;
+    });
+    localStorage
+      .setItem('ID_PRODUTO', JSON.stringify(newItemsArry));
+    this.setState({
+      itemsLS: newItemsArry,
+    });
+  };
+
+  decrease = (productCart) => {
+    const items = localStorage.getItem('ID_PRODUTO');
+    const itemsArray = JSON.parse(items) || [];
+    const newItems = itemsArray.map((item) => { // o map vai de produto em produto e altera retornando um novo array
+      if (item.id === productCart.id) {
+        item.quantity -= 1;
+      }
+      return item;
+    });
+    localStorage
+      .setItem('ID_PRODUTO', JSON.stringify(newItems));
+    this.setState({
+      itemsLS: newItems,
+    });
+  };
+
   render() {
     const { itemsLS } = this.state;
     return (
@@ -52,7 +86,7 @@ class ShoppingCart extends Component {
               <button
                 type="button"
                 data-testid="product-increase-quantity"
-                onClick={ () => console.log('somar') }
+                onClick={ () => this.increase(product) }
               >
                 +
               </button>
@@ -60,11 +94,12 @@ class ShoppingCart extends Component {
                 data-testid="shopping-cart-product-quantity"
               >
                 { product.quantity }
+
               </p>
               <button
                 type="button"
                 data-testid="product-decrease-quantity"
-                onClick={ () => console.log('subtrair') }
+                onClick={ () => this.decrease(product) }
               >
                 -
               </button>
