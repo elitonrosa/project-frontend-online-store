@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ProductsCard from '../components/ProductsCard';
 
@@ -70,6 +71,7 @@ class ShoppingCart extends Component {
 
   render() {
     const { itemsLS } = this.state;
+    const { history } = this.props;
     return (
       <div>
         {!itemsLS
@@ -109,9 +111,27 @@ class ShoppingCart extends Component {
               </button>
             </div>
           )))}
+        <div className="button-finalizar-compra">
+          <button
+            type="button"
+            data-testid="checkout-products"
+            onClick={ () => history.push({
+              pathname: '/checkout',
+              state: { itemsShoppingCart: itemsLS },
+            }) }
+          >
+            Finalizar Compra
+          </button>
+        </div>
       </div>
     );
   }
 }
+
+ShoppingCart.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default ShoppingCart;
