@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 
 class FormAvaliation extends Component {
   render() {
-    const { message, handleChange, onClickButton } = this.props;
+    const {
+      message,
+      handleChange,
+      onClickButton,
+      emailUser,
+      description } = this.props;
     return (
       <div
         className="form-container"
@@ -18,6 +23,7 @@ class FormAvaliation extends Component {
               id="email"
               data-testid="product-detail-email"
               onChange={ handleChange }
+              value={ emailUser }
             />
             E-mail
           </label>
@@ -61,6 +67,7 @@ class FormAvaliation extends Component {
             placeholder="Escreva algo sobre o produto"
             name="description"
             onChange={ handleChange }
+            value={ description }
           />
           <button
             type="button"

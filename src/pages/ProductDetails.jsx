@@ -82,7 +82,7 @@ class ProductDetails extends Component {
 
   onClickButton = () => {
     const { emailUser, description, rate } = this.state;
-    if (!emailUser && !description && !rate) {
+    if (!rate || !emailUser.match(/\S+@\S+\.\S+/)) {
       this.setState({
         message: true,
       });
@@ -94,6 +94,10 @@ class ProductDetails extends Component {
           text: description,
           rating: rate,
         }],
+        emailUser: '',
+        description: '',
+        rate: '',
+
       }), () => {
         const { savedAvaliations, id } = this.state; // pega as avaliações salvas do state
         localStorage.setItem(id, JSON.stringify(savedAvaliations)); // salva no LSFormAvaliation
@@ -139,6 +143,7 @@ class ProductDetails extends Component {
           handleChange={ this.handleChange }
           onClickButton={ this.onClickButton }
           message={ message }
+          { ...this.state }
         />
         <AvaliationProduct { ...this.state } />
       </div>
